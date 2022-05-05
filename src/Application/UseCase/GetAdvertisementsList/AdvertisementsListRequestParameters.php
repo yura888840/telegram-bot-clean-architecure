@@ -5,8 +5,16 @@ namespace App\Application\UseCase\GetAdvertisementsList;
 
 class AdvertisementsListRequestParameters
 {
-    public function __construct()
-    {
+    private string $land;
 
+    public function __construct(
+        string $land
+    ) {
+        $this->land = $land;
+    }
+
+    public function getLand(): string
+    {
+        return $this->land;
     }
 }
