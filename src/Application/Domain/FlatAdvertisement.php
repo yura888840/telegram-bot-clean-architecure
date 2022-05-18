@@ -8,34 +8,34 @@ use DateTimeZone;
 
 class FlatAdvertisement
 {
-    private $id;
+    private mixed $id;
 
-    private $land;
+    private string $land;
 
-    private $city;
+    private mixed $city;
 
-    private $address;
+    private mixed $address;
 
-    private $owner_number;
+    private mixed $ownerNumber;
 
-    private $status = 'ok';
+    private string $status = 'ok';
 
-    private $created_at;
+    private DateTimeImmutable $createdAt;
 
-    private $additional_info;
+    private mixed $additionalInfo;
 
     /**
      * @throws \Exception
      */
     public function __construct()
     {
-        $this->created_at = new DateTimeImmutable('now', new DateTimeZone('Europe/Berlin'));
+        $this->createdAt = new DateTimeImmutable('now', new DateTimeZone('Europe/Berlin'));
     }
 
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId(): mixed
     {
         return $this->id;
     }
@@ -44,7 +44,7 @@ class FlatAdvertisement
      * @param mixed $id
      * @return FlatAdvertisement
      */
-    public function setId($id): FlatAdvertisement
+    public function setId(mixed $id): FlatAdvertisement
     {
         $this->id = $id;
         return $this;
@@ -53,7 +53,7 @@ class FlatAdvertisement
     /**
      * @return mixed
      */
-    public function getLand()
+    public function getLand(): mixed
     {
         return $this->land;
     }
@@ -62,7 +62,7 @@ class FlatAdvertisement
      * @param mixed $land
      * @return FlatAdvertisement
      */
-    public function setLand($land): FlatAdvertisement
+    public function setLand(string $land): FlatAdvertisement
     {
         $this->land = $land;
         return $this;
@@ -71,7 +71,7 @@ class FlatAdvertisement
     /**
      * @return mixed
      */
-    public function getCity()
+    public function getCity(): mixed
     {
         return $this->city;
     }
@@ -80,7 +80,7 @@ class FlatAdvertisement
      * @param mixed $city
      * @return FlatAdvertisement
      */
-    public function setCity($city): FlatAdvertisement
+    public function setCity(mixed $city): FlatAdvertisement
     {
         $this->city = $city;
         return $this;
@@ -89,7 +89,7 @@ class FlatAdvertisement
     /**
      * @return mixed
      */
-    public function getAddress()
+    public function getAddress(): mixed
     {
         return $this->address;
     }
@@ -98,7 +98,7 @@ class FlatAdvertisement
      * @param mixed $address
      * @return FlatAdvertisement
      */
-    public function setAddress($address): FlatAdvertisement
+    public function setAddress(mixed $address): FlatAdvertisement
     {
         $this->address = $address;
         return $this;
@@ -107,25 +107,25 @@ class FlatAdvertisement
     /**
      * @return mixed
      */
-    public function getOwnerNumber()
+    public function getOwnerNumber(): mixed
     {
-        return $this->owner_number;
+        return $this->ownerNumber;
     }
 
     /**
-     * @param mixed $owner_number
+     * @param mixed $ownerNumber
      * @return FlatAdvertisement
      */
-    public function setOwnerNumber($owner_number): FlatAdvertisement
+    public function setOwnerNumber($ownerNumber): FlatAdvertisement
     {
-        $this->owner_number = $owner_number;
+        $this->ownerNumber = $ownerNumber;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getStatus()
+    public function getStatus(): mixed
     {
         return $this->status;
     }
@@ -134,7 +134,7 @@ class FlatAdvertisement
      * @param mixed $status
      * @return FlatAdvertisement
      */
-    public function setStatus($status): FlatAdvertisement
+    public function setStatus(mixed $status): FlatAdvertisement
     {
         $this->status = $status;
         return $this;
@@ -145,34 +145,34 @@ class FlatAdvertisement
      */
     public function getCreatedAt(): DateTimeImmutable
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * @param DateTimeImmutable $created_at
+     * @param DateTimeImmutable $createdAt
      * @return FlatAdvertisement
      */
-    public function setCreatedAt(DateTimeImmutable $created_at): FlatAdvertisement
+    public function setCreatedAt(DateTimeImmutable $createdAt): FlatAdvertisement
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getAdditionalInfo()
+    public function getAdditionalInfo(): mixed
     {
-        return $this->additional_info;
+        return $this->additionalInfo;
     }
 
     /**
-     * @param mixed $additional_info
+     * @param mixed $additionalInfo
      * @return FlatAdvertisement
      */
-    public function setAdditionalInfo($additional_info): FlatAdvertisement
+    public function setAdditionalInfo(mixed $additionalInfo): FlatAdvertisement
     {
-        $this->additional_info = $additional_info;
+        $this->additionalInfo = $additionalInfo;
         return $this;
     }
 }

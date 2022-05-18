@@ -8,7 +8,7 @@ class AdvertisementsListRequestParameters
     private string $land;
 
     public function __construct(
-        string $land
+        string $land = ''
     ) {
         $this->land = $land;
     }

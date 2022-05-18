@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Application\UseCase\GetAdvertisementsList;
 
+use App\Application\Domain\AdvertisementsCollection;
 use App\Application\Domain\FlatAdvertisement;
 use App\Application\UseCase\GetAdvertisementsList\AdvertisementsListRequestParameters;
-use App\Application\UseCase\GetAdvertisementsList\AdvertisementsListResult;
 use App\Application\UseCase\GetAdvertisementsList\AdvertisementsProviderInterface;
 use App\Application\UseCase\GetAdvertisementsList\Interactor;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +24,7 @@ class InteractorTest extends TestCase
 
     protected function setUp(): void
     {
-        $result = new AdvertisementsListResult();
+        $result = new AdvertisementsCollection();
         $this->adsFetcher = $this->prophesize(AdvertisementsProviderInterface::class);
         $this->adsFetcher->fetchActiveAdvertisements(Argument::any())->willReturn($result);
 
@@ -35,43 +35,43 @@ class InteractorTest extends TestCase
 
     public function testGetListShouldReturnCorrectResult(): void
     {
-        $parameters = $this->prophesize(AdvertisementsListRequestParameters::class);
-        $parameters->getLand()->willReturn('');
+        $parameters = new AdvertisementsListRequestParameters();
 
-        $result = $this->interactor->getAdvertisementsList($parameters->reveal());
+        $result = $this->interactor->getActiveAdvertisementsList($parameters);
 
-        self::assertInstanceOf(AdvertisementsListResult::class, $result);
+        self::assertInstanceOf(AdvertisementsCollection::class, $result);
     }
 
     public function testResultShouldBeEmptyAdvertisementList(): void
     {
         $parameters = new AdvertisementsListRequestParameters('Berlin');
 
-        $result = $this->interactor->getAdvertisementsList($parameters);
+        $collection = $this->interactor->getActiveAdvertisementsList($parameters);
 
-        $ads = $result->getAdvertisements();
-
-        self::assertEquals([], $ads);
+        self::assertEmpty($collection);
     }
 
-    public function testResultFetchedAndShouldContainListOfAdvertisements(): void
+    public function testShouldReturnForSpecifiedCityNonEmptyCollection(): void
     {
-        $adsCollection = [
-            new FlatAdvertisement(),
-            new FlatAdvertisement(),
-        ];
-        $result = new AdvertisementsListResult($adsCollection);
 
-        $this->adsFetcher->fetchActiveAdvertisements(Argument::any())->willReturn($result);
+        $resultCollection = new AdvertisementsCollection();
+        $resultCollection
+            ->addAdvertisement(
+                (new FlatAdvertisement())
+                        ->setLand('Berlin')
+            )
+            ->addAdvertisement(
+                (new FlatAdvertisement())
+                    ->setLand('Berlin')
+            );
+
+        $this->adsFetcher->fetchActiveAdvertisements(Argument::exact('Berlin'))->willReturn($resultCollection);
 
         $parameters = new AdvertisementsListRequestParameters('Berlin');
 
-        $ads = $this->interactor->getAdvertisementsList($parameters)->getAdvertisements();
+        $ads = $this->interactor->getActiveAdvertisementsList($parameters);
 
         self::assertNotEmpty($ads);
-
-        foreach ($ads as $ad) {
-            self::assertInstanceOf(FlatAdvertisement::class, $ad);
-        }
+        self::assertContainsOnlyInstancesOf(FlatAdvertisement::class, $resultCollection);
     }
 }

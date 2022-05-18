@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Application\UseCase\GetAdvertisementsList;
 
+use App\Application\Domain\AdvertisementsCollection;
+
 class Interactor
 {
     private AdvertisementsProviderInterface $advertisementsProvider;
@@ -13,15 +15,9 @@ class Interactor
         $this->advertisementsProvider = $advertisementsProvider;
     }
 
-    public function getAdvertisementsList(AdvertisementsListRequestParameters $requestParameters): ?AdvertisementsListResult
+    public function getActiveAdvertisementsList(AdvertisementsListRequestParameters $requestParameters): AdvertisementsCollection
     {
-        try {
-            $result = $this->advertisementsProvider->fetchActiveAdvertisements($requestParameters->getLand());
-        } catch (\Throwable $exception) {
-            return null;
-        }
-
-        return $result;
+        return $this->advertisementsProvider->fetchActiveAdvertisements($requestParameters->getLand());
     }
 }
 
